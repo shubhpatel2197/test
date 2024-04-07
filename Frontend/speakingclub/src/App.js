@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Header from './components/Header';
 import CreateGroup from './components/Create_group/CreateGroup';import 'bootstrap/dist/css/bootstrap.min.css';
 import Card from './components/Groups';
 
 function App() {
-
+  
   const [backdrop,setbackdrop] = useState(false);
 
   function setbackoff(){

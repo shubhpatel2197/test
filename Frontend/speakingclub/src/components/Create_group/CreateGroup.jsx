@@ -1,8 +1,8 @@
 import * as React from "react";
 import Dialog from "@mui/material/Dialog";
 import Zoom from "@mui/material/Zoom";
-import stackedWavesImage from "/Users/shubh/speakingClub/Frontend/speakingclub/src/Images/wave-haikei.png";
-import '/Users/shubh/speakingClub/Frontend/speakingclub/src/components/Create_group/CreateGroup.css';
+import stackedWavesImage from "/Users/rajshah/Developer/speakingClub/Frontend/speakingclub/src/Images/wave-haikei.png";
+import './CreateGroup.css';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
