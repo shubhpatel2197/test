@@ -1,7 +1,7 @@
 import * as React from "react";
 import Dialog from "@mui/material/Dialog";
 import Zoom from "@mui/material/Zoom";
-import stackedWavesImage from "/Users/rajshah/Developer/speakingClub/Frontend/speakingclub/src/Images/wave-haikei.png";
+import stackedWavesImage from "/Users/shubh/speakingClub/Frontend/speakingclub/src/Images/wave-haikei.png";
 import './CreateGroup.css';
 
 

@@ -30,7 +30,7 @@ export default function Card({ data }) {
         <p className="card-text">{data.info} </p>
         <div className="circles-container" style={circlesContainerStyle}>{renderCircles()}</div>
         <div style={{top:'40px', display:'flex', flexWrap:'wrap',justifyContent:'flex-end', alignContent:'flex-end',}}>
-        <a  className="btn btn-primary" >Join group</a>
+        <button className="btn btn-primary" >Join group</button>
         </div>
       </div>
     </div>
