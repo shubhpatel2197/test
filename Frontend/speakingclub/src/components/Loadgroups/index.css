@@ -1,0 +1,6 @@
+.container1{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top:-0.4rem;
+    margin-bottom: 2rem;
+}

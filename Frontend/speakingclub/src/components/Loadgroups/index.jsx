@@ -1,47 +1,39 @@
-import { useEffect,useState } from "react";
-import Card from "../Groups"
-export default function LoadGroup(){
-    const [groups, setGroups] = useState([]);
-  useEffect(()=>{
-    const requestOptions = {
-      method: "GET",
-      redirect: "follow"
-    };
-    
-    fetch("http://localhost:4000/allgroups", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
+import { useEffect, useState } from "react";
+import Card from "../Groups";
+import './index.css';
+
+export default function LoadGroup() {
+  const [groups, setGroups] = useState([]);
+
+  useEffect(() => {
+    // Function to fetch groups
+    const fetchGroups = async () => {
+      try {
+        const requestOptions = {
+          method: "GET",
+          redirect: "follow"
+        };
+        const response = await fetch("http://localhost:4000/allgroups", requestOptions);
+        const result = await response.json();
         setGroups(result);
-    })
-      .catch((error) => console.error(error));
-    const fetcher = setInterval(()=>{
-      const requestOptions = {
-        method: "GET",
-        redirect: "follow"
-      };
-      
-      fetch("http://localhost:4000/allgroups", requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-          setGroups(result);
-      })
-        .catch((error) => console.error(error));
-  },2000);
-  return ()=>{
-    clearInterval(fetcher);
-  }
-  },[])
-    return (
-        <div className='container' style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'space-between'
-          }}>
-            {
-              groups.map((group) => {
-                return <Card key={group._id} data={group}/>;
-              })
-            }
-          </div>
-    )
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    // Fetch groups immediately on mount
+    fetchGroups();
+
+    // Fetch groups at intervals
+    const intervalId = setInterval(fetchGroups, 2000);
+
+    // Cleanup function to clear interval
+    return () => clearInterval(intervalId);
+  }, []);
+
+  return (
+    <div className='container1' >
+      {groups.map((group) => <Card key={group.id} data={group} />)}
+    </div>
+  );
 }
