@@ -39,6 +39,40 @@ export default function CreateGroup(props) {
   const [selectedSZ, setSelectedSZ] = useState([{ value: '2', label: '2' }]);
   const [selectedLvl, setSelectedLvl] = useState([ { value: 'Any Level', label: 'Any Level'}]);
   const [showPrompt, setShowPrompt] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  let SelectedLang;
+
+  if(selectedLang.length===1){
+    SelectedLang=selectedLang[0].label;
+  }
+  else if(selectedLang.length===2){
+    SelectedLang=`${selectedLang[0].label} + ${selectedLang[1].label}`;
+  }
+
+const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+const raw = JSON.stringify({
+  "maxLimit": selectedSZ.label,
+  "language": SelectedLang,
+  "level": selectedLvl.label,
+  "info": inputValue 
+});
+
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: raw,
+  redirect: "follow"
+};
+
+fetch("http://localhost:4000/creategroup", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.error(error));
+
 
     const handleChange1 = selectedLang => {
         if (selectedLang.length <= 2) {
@@ -57,8 +91,6 @@ export default function CreateGroup(props) {
       setSelectedLvl(selectedLvl);
     };
 
-    const [inputValue, setInputValue] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
     const value = e.target.value;
