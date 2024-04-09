@@ -40,8 +40,8 @@ export default function CreateGroup(props) {
   const [selectedLvl, setSelectedLvl] = useState([ { value: 'Any Level', label: 'Any Level'}]);
   const [showPrompt, setShowPrompt] = useState(false);
 
-    const handleChange1 = selectedOption => {
-        if (selectedOption.length <= 2) {
+    const handleChange1 = selectedLang => {
+        if (selectedLang.length <= 2) {
             setSelectedLang(selectedLang);
             setShowPrompt(false);
         } else {
