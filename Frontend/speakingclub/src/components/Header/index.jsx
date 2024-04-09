@@ -25,7 +25,7 @@ export default function Header(props) {
               style={{ maxHeight: '100px', backgroundColor: 'primary' }}
               navbarScroll
             >
-              <button class="button-87" onClick={props.setbackon}>Create Group</button>
+              <button className="button-87" onClick={props.setbackon}>Create Group</button>
             </Nav>
             <Form className="d-flex">
               <Form.Control

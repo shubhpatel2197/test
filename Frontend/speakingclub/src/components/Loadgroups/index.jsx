@@ -29,7 +29,7 @@ export default function LoadGroup(){
           }}>
             {
               groups.map((group) => {
-                return <Card key={group.id} data={group}/>;
+                return <Card key={group._id} data={group}/>;
               })
             }
           </div>
