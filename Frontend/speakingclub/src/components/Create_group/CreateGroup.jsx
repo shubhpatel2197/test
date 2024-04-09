@@ -5,6 +5,7 @@ import stackedWavesImage from "./wave-haikei.png";
 import './CreateGroup.css';
 import Select from 'react-select';
 import { useState,useEffect } from "react";
+import { toast } from "react-toastify";
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -64,8 +65,6 @@ export default function CreateGroup(props) {
         "info": inputValue 
       });
 
-      console.log(raw);
-
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
@@ -76,7 +75,7 @@ export default function CreateGroup(props) {
 
       fetch("http://localhost:4000/creategroup", requestOptions)
         .then((response) => response.text())
-        .then((result) => console.log(result))
+        .then((result) => toast.success("Group Created !!!"))
         .catch((error) => console.error(error));
 
         setInputValue("")
@@ -206,7 +205,6 @@ export default function CreateGroup(props) {
         ></Select>
            
         </div>
-
 
         <div className="f_three">
         <label  className="f_label_3">Topic</label>

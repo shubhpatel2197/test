@@ -12,7 +12,6 @@ export default function LoadGroup(){
     fetch("http://localhost:4000/allgroups", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
         setGroups(result);
     })
       .catch((error) => console.error(error));

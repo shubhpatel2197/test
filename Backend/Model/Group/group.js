@@ -31,6 +31,7 @@ const gs = new mongoose.Schema({
         type: String,
         required: true
     }
+    
 
 },{ timestamps: true })
 const group = mongoose.model('group',gs);
