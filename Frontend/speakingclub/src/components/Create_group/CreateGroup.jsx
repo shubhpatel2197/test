@@ -51,28 +51,39 @@ export default function CreateGroup(props) {
     SelectedLang=`${selectedLang[0].label} + ${selectedLang[1].label}`;
   }
 
-const myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
+ function formsubmit(e){
+    props.setbackoff()
+     e.preventDefault()
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
 
-const raw = JSON.stringify({
-  "maxLimit": selectedSZ.label,
-  "language": SelectedLang,
-  "level": selectedLvl.label,
-  "info": inputValue 
-});
+      const raw = JSON.stringify({
+        "maxLimit": selectedSZ.label,
+        "language": SelectedLang,
+        "level": selectedLvl.label,
+        "info": inputValue 
+      });
 
-const requestOptions = {
-  method: "POST",
-  headers: myHeaders,
-  body: raw,
-  redirect: "follow"
-};
+      console.log(raw);
 
-fetch("http://localhost:4000/creategroup", requestOptions)
-  .then((response) => response.text())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(error));
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+      };
 
+
+      fetch("http://localhost:4000/creategroup", requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
+
+        setInputValue("")
+        setSelectedSZ([{ value: '2', label: '2' }])
+        setSelectedLang([])
+        setSelectedLvl([ { value: 'Any Level', label: 'Any Level'}])
+}
 
     const handleChange1 = selectedLang => {
         if (selectedLang.length <= 2) {
@@ -136,8 +147,7 @@ fetch("http://localhost:4000/creategroup", requestOptions)
           height: 'auto' // Set height to auto to prevent increasing its height
       })
   };
-  
-  
+
  
   return (
     <Dialog
@@ -226,7 +236,7 @@ fetch("http://localhost:4000/creategroup", requestOptions)
            
         </div>
 
-          <button className="button-87-2">Save</button>
+          <button className="button-87-2" onClick={(e)=>formsubmit(e)} >Save</button>
         </form>
 
       </div>

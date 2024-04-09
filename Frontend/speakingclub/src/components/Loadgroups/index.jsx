@@ -17,7 +17,7 @@ export default function LoadGroup(){
     })
       .catch((error) => console.error(error));
 
-  },5000);
+  },2000);
   return ()=>{
     clearInterval(fetcher);
   }

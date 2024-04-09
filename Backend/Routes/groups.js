@@ -14,6 +14,7 @@ router.post("/creategroup",(req,res)=>{
         level: req.body.level,
         info: req.body.info
     }
+    
     newGroup = new group(newGroup);
     newGroup.save().then((result) => {
         res.send({"message":"group created","group": result});
