@@ -37,8 +37,8 @@ export default function CreateGroup(props) {
 
 
   const [selectedLang, setSelectedLang] = useState([]);
-  const [selectedSZ, setSelectedSZ] = useState([{ value: '2', label: '2' }]);
-  const [selectedLvl, setSelectedLvl] = useState([ { value: 'Any Level', label: 'Any Level'}]);
+  const [selectedSZ, setSelectedSZ] = useState({ value: '2', label: '2' });
+  const [selectedLvl, setSelectedLvl] = useState({ value: 'Any Level', label: 'Any Level'});
   const [showPrompt, setShowPrompt] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -79,9 +79,9 @@ export default function CreateGroup(props) {
         .catch((error) => console.error(error));
 
         setInputValue("")
-        setSelectedSZ([{ value: '2', label: '2' }])
+        setSelectedSZ({ value: '2', label: '2' })
         setSelectedLang([])
-        setSelectedLvl([ { value: 'Any Level', label: 'Any Level'}])
+        setSelectedLvl( { value: 'Any Level', label: 'Any Level'})
 }
 
     const handleChange1 = selectedLang => {
