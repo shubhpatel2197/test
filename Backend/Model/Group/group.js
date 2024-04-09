@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const group = mongoose.model('group',{
+const gs = new mongoose.Schema({
     maxLimit:{
         type: Number,
         required:true,
@@ -32,6 +32,7 @@ const group = mongoose.model('group',{
         required: true
     }
 
-});
+},{ timestamps: true })
+const group = mongoose.model('group',gs);
 
 module.exports = group;

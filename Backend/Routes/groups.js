@@ -14,16 +14,17 @@ router.post("/creategroup",(req,res)=>{
         level: req.body.level,
         info: req.body.info
     }
-    
+    console.log(newGroup);
     newGroup = new group(newGroup);
     newGroup.save().then((result) => {
         res.send({"message":"group created","group": result});
     }).catch((err) => {
+        console.log(err)
         res.status(400).send({"error":"User set is failed"});
     });
 });
 router.get("/allgroups",(req,res)=>{
-    group.find().then(result =>
+    group.find().sort({ createdAt: -1}).then(result =>
     res.send(result)
     )
     .catch(err=>{
