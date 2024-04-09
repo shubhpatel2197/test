@@ -1,5 +1,86 @@
+ .form{
+  display: flex;
+  flex-wrap: wrap;
+ }
+ 
+ .f_one{
+  margin-top: 0.8rem;
+ }
+ 
+ .f_label{
+    color: #fff;
+    font-family: 'Times New Roman', Times, serif;
+    margin-left: 2rem;
+    margin-bottom: 1.3px;
+ }
+
+ .f_one_in{
+  width: 18rem;
+  margin-left: 2rem;
+ }
+
+ .f_two{
+  margin-top: 0.8rem;
+ }
+
+ .f_label_2{
+  color: #fff;
+  font-family: 'Times New Roman', Times, serif;
+  margin-left: 2rem;
+  margin-bottom: 1.3px;
+}
+
+.f_two_in{
+  width: 10rem;
+  margin-left: 2rem;
+ }
+
+ .f_three{
+  margin-top:2.5rem;
+  width: 6rem;
+  margin-left: 2rem;
+ }
+
+ .f_label_3{
+  color: #fff;
+  font-family: 'Times New Roman', Times, serif;
+ }
+
+ .Topic_in{
+  margin-top: 1.3px;
+  width: 20rem;
+  border-radius: 6px;
+  border-color: black;
+  
+ }
+
+ .Topic_in {
+  border: 2px solid #ccc; /* Add any initial border styles */
+  padding: 4.3px; /* Add padding as needed */
+}
+
+.Topic_in:focus {
+  border-color: rgb(51, 51, 231); /* Change the border color when input is focused */
+  outline: none; /* Remove the outline */
+}
+
+
+ .f_four{
+  width: 10rem;
+    margin-left: 16rem;
+    margin-top: 2.4rem;
+ }
+
+ .f_label_4{
+  color: #fff;
+  font-family: 'Times New Roman', Times, serif;
+  
+  margin-bottom: 1.3px;
+}
+
+ 
  .button-87-1 {
-        margin-top: 20rem;
+        margin-top: 22.7rem;
     margin-left: 10rem;
        
         padding: 8px 30px;
@@ -38,7 +119,7 @@
 
   
 .button-87-2 {
-    margin-top: 18rem;
+    margin-top: 18.7rem;
     margin-left: 20rem;
  
   padding: 8px 30px;

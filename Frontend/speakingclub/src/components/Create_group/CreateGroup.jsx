@@ -1,8 +1,10 @@
 import * as React from "react";
 import Dialog from "@mui/material/Dialog";
 import Zoom from "@mui/material/Zoom";
-import stackedWavesImage from "./stacked-waves-haikei.png";
+import stackedWavesImage from "./wave-haikei.png";
 import './CreateGroup.css';
+import Select from 'react-select';
+import { useState,useEffect } from "react";
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -10,6 +12,101 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function CreateGroup(props) {
+
+  const options = [
+    { value: 'English', label: 'English' },
+    { value: 'Hindi', label: 'Hindi' },
+    { value: 'Gujarati', label: 'Gujarati' },
+    { value: 'Spanish', label: 'Spanish' },
+    { value: 'Marathi', label: 'Marathi' },
+    { value: 'Punjabi', label: 'Punjabi' },
+  ]
+
+  const option2 = [
+    { value: '1', label: '1'},
+    { value: '2', label: '2' }
+  ];
+
+  const option3 = [
+    { value: 'Any Level', label: 'Any Level'},
+    { value: 'Beginner', label: 'Beginner' },
+    { value: 'Intermediate', label: 'Intermediate' },
+    { value: 'Pro', label: 'Pro' },
+  ];
+
+
+  const [selectedLang, setSelectedLang] = useState([]);
+  const [selectedSZ, setSelectedSZ] = useState([{ value: '2', label: '2' }]);
+  const [selectedLvl, setSelectedLvl] = useState([ { value: 'Any Level', label: 'Any Level'}]);
+  const [showPrompt, setShowPrompt] = useState(false);
+
+    const handleChange1 = selectedOption => {
+        if (selectedOption.length <= 2) {
+            setSelectedLang(selectedLang);
+            setShowPrompt(false);
+        } else {
+            setShowPrompt(true);
+        }
+    };
+
+    const handleChange2 = selectedSZ => {
+          setSelectedSZ(selectedSZ);
+    };
+
+    const handleChange3 = selectedLvl => {
+      setSelectedLvl(selectedLvl);
+    };
+
+    const [inputValue, setInputValue] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    if (value.length <= 30) {
+      setInputValue(value);
+      setErrorMessage('');
+    } else {
+      setErrorMessage('Character limit exceeded!');
+    }
+  };
+
+    const customStyles = {
+      control: (provided, state) => ({
+          ...provided,
+          border: '1px solid #ccc',
+          borderRadius: '4px',
+          boxShadow: state.isFocused ? '0 0 0 1px #007bff' : null,
+          '&:hover': {
+              borderColor: '#007bff'
+          }
+      }),
+      multiValue: (provided) => ({
+          ...provided,
+          backgroundColor: '#007bff',
+          borderRadius: '20px',
+          color: 'white'
+      }),
+      multiValueLabel: (provided) => ({
+          ...provided,
+          color: 'white'
+      }),
+      multiValueRemove: (provided) => ({
+          ...provided,
+          backgroundColor: 'transparent',
+          color: 'white',
+          '&:hover': {
+              backgroundColor: '#0056b3',
+              color: 'white'
+          }
+      }),
+      input: (provided) => ({
+          ...provided,
+          height: 'auto' // Set height to auto to prevent increasing its height
+      })
+  };
+  
+  
+ 
   return (
     <Dialog
       sx={{
@@ -28,17 +125,80 @@ export default function CreateGroup(props) {
       onClose={props.setbackoff}
       open={props.backdrop}
     >
-      <div>
-        <h2>H</h2>
+      
+      
+        <h2 style={{ marginLeft:'12rem',marginTop:'1rem', color: 'white' }}>Create Group</h2>
         <button className="button-87-1" onClick={props.setbackoff}>Close</button>
-        <form action="">
-          <input type="submit" />
-          <input type="submit" />
-          <input type="submit" />
-          <input type="submit" />
+
+        <div>
+        <form action="" className="form">
+
+        
+        
+        <div className="f_one">
+          <label htmlFor="" className="f_label">Language</label>
+            <Select
+                className="f_one_in"
+                options={options}
+                isMulti
+                value={selectedLang}
+                onChange={handleChange1}
+                closeMenuOnSelect={false}
+                styles={customStyles}
+            />
+            {showPrompt && <p style={{ marginLeft: '1rem', color: 'red' }}>You can only select up to two options.</p>}
+        </div>
+
+
+
+        <div className="f_two">
+        <label htmlFor="" className="f_label_2">Group Size</label>
+        <Select
+          defaultValue={option2[1]}
+          className="f_two_in"
+          name="colors"
+          options={option2}
+          value={selectedSZ}
+          onChange={handleChange2}
+          classNamePrefix="select"
+        ></Select>
+           
+        </div>
+
+
+        <div className="f_three">
+        <label  className="f_label_3">Topic</label>
+        <input
+        type="text"
+        placeholder="Let's Talk"
+        className="Topic_in"
+        value={inputValue}
+        onChange={handleChange}
+      />
+      {errorMessage && <p style={{ width:'12rem', color: 'red' }}>{errorMessage}</p>}
+           
+        </div>
+
+
+        <div className="f_four">
+        <label htmlFor="" className="f_label_4">Level</label>
+        <Select
+          className="f_four_in"
+          defaultValue={option3[0]}
+          name="colors"
+          value={selectedLvl}
+          onChange={handleChange3}
+          options={option3}
+          classNamePrefix="select"
+        ></Select>
+           
+        </div>
+
           <button className="button-87-2">Save</button>
         </form>
+
       </div>
     </Dialog>
   );
 }
+
