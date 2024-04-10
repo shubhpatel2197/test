@@ -61,7 +61,7 @@
   }
   
   .button-27:hover {
-    background-image: linear-gradient(45deg, #bf7402 0%, hsl(41, 87%, 51%)  90%);
+    background-image: linear-gradient(45deg, #29AB87 100%, hsl(41, 84%, 61%)  90%);
     box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
   }

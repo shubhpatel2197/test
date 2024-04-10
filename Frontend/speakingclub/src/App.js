@@ -1,30 +1,26 @@
-import { useEffect, useState } from 'react';
 import './App.css';
-import Header from './components/Header';
-import CreateGroup from './components/Create_group/CreateGroup';import 'bootstrap/dist/css/bootstrap.min.css';
-import LoadGroup from './components/Loadgroups';
+import {BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Import BrowserRouter
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Login from './components/Login';
+import Home from './components/Home';
+import Signup from './components/Signup';
+
+
 
 function App() {
   
-  const [backdrop,setbackdrop] = useState(false);
-
-  function setbackoff(){
-    setbackdrop(false);
-  }
-
-  function setbackon(){
-    setbackdrop(true);
-  }
-
-
   
 
   return (
-    <>
-       <Header setbackon={setbackon} />
-    <CreateGroup setbackoff={setbackoff} backdrop={backdrop}></CreateGroup>
-      <LoadGroup></LoadGroup>
-    </>
+    <Router>
+        <Routes>
+              <Route path="/" element={<Home/>} />
+              <Route path="/login" element={<Login/>} />
+              <Route path="/signup" element={<Signup/>} />
+              <Route path="*" element={<Home />} /> {/* Fallback route */}
+      </Routes>
+  </Router>
+
   );
 }
 

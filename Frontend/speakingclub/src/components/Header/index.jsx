@@ -6,6 +6,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import './index.css';
 import logo from './download.png'; // Adjust the path according to the location of your logo
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 export default function Header(props) {
   return (
@@ -27,7 +28,7 @@ export default function Header(props) {
             >
               <button className="button-87" onClick={props.setbackon}>Create Group</button>
             </Nav>
-            <Form className="d-flex">
+            {/* <Form className="d-flex">
               <Form.Control
                 type="search"
                 placeholder="Search"
@@ -36,8 +37,8 @@ export default function Header(props) {
                 style={{ width: '30vw' }}
               />
               <Button className="mx-2" variant="outline-success">Search</Button>
-            </Form>
-            <Button variant="outline-success">Login</Button>
+            </Form> */}
+            <Link to="/login" class="button-87 ff">Login</Link> {/* Use Link from react-router-dom */}
           </Navbar.Collapse>
         </Container>
       </Navbar>
