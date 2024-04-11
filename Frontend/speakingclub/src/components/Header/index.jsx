@@ -1,11 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import './index.css';
-import logo from './download.png'; // Adjust the path according to the location of your logo
+import logo from '../../Images/download.png'; // Adjust the path according to the location of your logo
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 export default function Header(props) {

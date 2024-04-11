@@ -10,7 +10,7 @@ import {
 }
 from 'mdb-react-ui-kit';
 import './index.css';
-import photo from './login.png';
+import photo from '../../Images/login.png';
 import { Link } from 'react-router-dom';
 
 export default function Signup() {
@@ -34,7 +34,6 @@ export default function Signup() {
         
 
           <div className="d-flex justify-content-between mx-4 mb-4">
-            <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
             <Link to="/Login" className='signup'>Login</Link>
           </div>
 

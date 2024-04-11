@@ -1,7 +1,10 @@
 import React from 'react';
 import './index.css'
+import { Link } from 'react-router-dom';
 
-export default function Card({ data }) {
+
+
+export default function Card({ data,getgid }) {
   const renderCircles = () => {
     const circles = [];
     for (let i = 0; i < data.maxLimit; i++) {
@@ -38,8 +41,8 @@ export default function Card({ data }) {
       width:'21rem',
     };
     bttn = {
-      marginTop:'-0.4rem',
-    }
+      marginTop:'-0.4rem'
+    };
   }
 
   if(data.maxLimit===2){
@@ -62,8 +65,8 @@ export default function Card({ data }) {
       width:'21rem',
     };
     bttn = {
-      marginTop:'0.4rem',
-    }
+      marginTop:'0.7rem',
+    };
   }
 
   if(data.maxLimit===3){
@@ -109,8 +112,9 @@ export default function Card({ data }) {
     };
   }
 
-
-
+  function handle(){
+    getgid(data.gid)
+  }
   
 
   return (
@@ -121,7 +125,7 @@ export default function Card({ data }) {
         <div className="circles-container" style={circlesContainerStyle}>{renderCircles()}</div>
         <div style={{top:'40px', display:'flex', flexWrap:'wrap',justifyContent:'flex-end', alignContent:'flex-end',}}>
         
-        <button className="button-27" style={bttn}>Join Group</button>
+        <Link className=" button-27"  style={bttn} onClick={handle}>Join Group</Link>
 
  
         </div>

@@ -12,7 +12,8 @@ router.post("/creategroup",(req,res)=>{
         maxLimit: req.body.maxLimit,
         language: req.body.language,
         level: req.body.level,
-        info: req.body.info
+        info: req.body.info,
+        gid: req.body.gid
     }
     console.log(newGroup);
     newGroup = new group(newGroup);

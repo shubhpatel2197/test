@@ -1,11 +1,14 @@
 import * as React from "react";
 import Dialog from "@mui/material/Dialog";
 import Zoom from "@mui/material/Zoom";
-import stackedWavesImage from "./wave-haikei.png";
+import stackedWavesImage from "../../Images/wave-haikei.png";
 import './CreateGroup.css';
 import Select from 'react-select';
 import { useState,useEffect } from "react";
 import { toast } from "react-toastify";
+import {Link}from 'react-router-dom';
+import { v1 as uuid } from 'uuid';
+
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -13,6 +16,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function CreateGroup(props) {
+  const gid = uuid();
+  const s_gid=`room?gid=${gid}`;
 
   const options = [
     { value: 'English', label: 'English' },
@@ -56,7 +61,8 @@ export default function CreateGroup(props) {
 
  function formsubmit(e){
     props.setbackoff()
-     e.preventDefault()
+    
+    //  e.preventDefault()
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
@@ -64,7 +70,8 @@ export default function CreateGroup(props) {
         "maxLimit": selectedSZ.label,
         "language": SelectedLang,
         "level": selectedLvl.label,
-        "info": inputValue 
+        "info": inputValue ,
+        "gid": gid
       });
 
       const requestOptions = {
@@ -236,7 +243,7 @@ export default function CreateGroup(props) {
            
         </div>
 
-          <button className="button-87-2" onClick={(e)=>formsubmit(e)} >Save</button>
+          <Link className="button-87-2" target="_blank" onClick={(e)=>{formsubmit(e);}} to={s_gid} >Save</Link>
         </form>
 
       </div>

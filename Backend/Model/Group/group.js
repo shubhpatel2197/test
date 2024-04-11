@@ -18,18 +18,20 @@ const gs = new mongoose.Schema({
             }
         }
     ],
+    gid:{
+        type:String
+    },
     language:{
         type: String,
-        required: true
-
+        required: false
     },
     level:{
         type: String,
-        required: true
+        required: false
     },
     info:{
         type: String,
-        required: true
+        required: false
     }
     
 
