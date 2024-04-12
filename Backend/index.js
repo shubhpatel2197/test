@@ -12,15 +12,14 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const User = require('./Model/User/user');
-const grproute = require('./Routes/groups');
+
 
 dotenv.config();
 
 const app = express();
-const port = 4000;
 const server = http.createServer(app);
 const io = socket(server);
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -108,7 +107,7 @@ passport.use(new LocalStrategy({
     passwordField: 'password'
 }, async (email, password, done) => {
     try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email:email });
         if (!user) {
             return done(null, false, { message: 'Incorrect email.' });
         }
@@ -144,7 +143,6 @@ app.use((req,res,next)=>{
 })
 
 
-app.use(grproute);
 // Login route
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/profile',
@@ -173,6 +171,7 @@ app.post('/signup', async (req, res) => {
     }
 });
 
+app.use(grproute);
 // Middleware to check if user is authenticated
 function isAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
@@ -181,6 +180,3 @@ function isAuthenticated(req, res, next) {
     res.redirect('/fail');
 }
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
