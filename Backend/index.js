@@ -1,4 +1,4 @@
-require('./Db/controller');
+require('./Db/controller');;
 const cookieParser = require('cookie-parser');
 const express = require('express');
 const dotenv = require('dotenv');
@@ -6,6 +6,13 @@ const mongoose = require('mongoose');
 const CORS = require('cors');
 const http = require("http");
 const socket = require("socket.io");
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const User = require('./Model/User/user');
+const grproute = require('./Routes/groups');
 
 dotenv.config();
 
@@ -13,11 +20,11 @@ const app = express();
 const port = 4000;
 const server = http.createServer(app);
 const io = socket(server);
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(CORS({
-    origin: '*',
-}));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(cookieParser());
 
 // Error handling middleware
@@ -79,3 +86,101 @@ server.listen(port, () => {
 });
 
 module.exports = server;
+app.use(session({
+    secret: String(process.env.SKEY),
+    resave: false,
+    store: MongoStore.create({
+        mongoUrl: process.env.DBURL,
+        ttl: 14 * 24 * 60 * 60 // = 14 days. Default
+      }),
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 2 * 60 * 60 * 1000 // 2 hours in milliseconds
+    }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(CORS({ origin: '*' }));
+
+// Passport local strategy
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+}, async (email, password, done) => {
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return done(null, false, { message: 'Incorrect email.' });
+        }
+        if (user.password !== password) {
+            return done(null, false, { message: 'Incorrect password.' });
+        }
+        return done(null, user);
+    } catch (error) {
+        return done(error);
+    }
+}));
+
+// Serialize and deserialize user
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+    try {
+        const user = await User.findById(id);
+        done(null, user);
+    } catch (error) {
+        done(error);
+    }
+});
+app.use((req,res,next)=>{
+    if(mongoose.connection.readyState==3||mongoose.connection.readyState==0){
+    fire();
+    next();
+    }
+    else
+    next();
+})
+
+
+app.use(grproute);
+// Login route
+app.post('/login', passport.authenticate('local', {
+    successRedirect: '/profile',
+    failureRedirect: '/fail'
+}));
+
+app.get('/fail', (req, res) => {
+    res.send({error:"Login failed"});
+});
+
+// Profile route
+app.get('/profile', isAuthenticated, (req, res) => {
+    res.send({username:req.user.username,email:req.user.email,avatar:req.user.avatar});
+});
+
+// Signup route
+app.post('/signup', async (req, res) => {
+    try {
+        const { username,email, password } = req.body;
+        const newUser = new User({ username,email, password });
+        newUser.avatar = `https://ui-avatars.com/api/?name=${username}&background=0D8ABC&color=fff`
+        await newUser.save();
+        res.send('Signup successful. Please <a href="/login">login</a>.');
+    } catch (error) {
+        res.status(500).send('Signup failed');
+    }
+});
+
+// Middleware to check if user is authenticated
+function isAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/fail');
+}
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
