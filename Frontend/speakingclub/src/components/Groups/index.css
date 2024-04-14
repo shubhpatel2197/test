@@ -6,7 +6,7 @@
     margin-top: 3rem;
     border-radius: 2rem;
     background-image: url('../../Images/blob-scene-haikei.png');
-    
+    margin-bottom: 1rem;
     background-size: cover; /* Cover ensures the background image covers the entire container */
     background-position: center;
     

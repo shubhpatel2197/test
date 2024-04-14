@@ -44,5 +44,8 @@
 }
 
 .head{
+  height: 4.6rem;
   background-color: black !important;
+  position: fixed !important;
+  width: 100%;
 }
