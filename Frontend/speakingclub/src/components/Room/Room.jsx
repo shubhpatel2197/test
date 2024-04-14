@@ -164,7 +164,8 @@ export default function Room(props) {
        
         if (!mic) {
             socketRef.current.emit("stream changed",{cam:cam,mic:true,userID:userID});    
-        } else if(cam){
+        }
+        else{
             socketRef.current.emit("stream changed",{cam:cam,mic:false,userID:userID});   
         }
     }
