@@ -3,17 +3,18 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import './index.css';
-import logo from '../../Images/download.png'; // Adjust the path according to the location of your logo
+import logo from '../../Images/download2.png'; // Adjust the path according to the location of your logo
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 export default function Header(props) {
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary header">
+      <Navbar expand="lg" bg="dark" className="bg-body-tertiary header head">
         <Container fluid>
-          <img src={logo} alt="Logo" style={{ width: "11rem",
-    height: '10rem',
-    marginLeft: '-1rem',
+          <img src={logo} alt="Logo" style={{ width: "4.8rem",
+    height: '4rem',
+    marginLeft: '1rem',
+    marginRight:'1rem',
     marginTop: '-3rem',
     marginBottom: '-3rem',}} /> {/* Apply width and height */}
           <Navbar.Toggle aria-controls="navbarScroll" />
