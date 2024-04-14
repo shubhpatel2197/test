@@ -7,10 +7,10 @@ import { ToastContainer } from 'react-toastify';
 document.title = "SpeakingClub";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+   <>
      <ToastContainer/>
     <App />
-  </React.StrictMode>
+    </>
 );
 
 

@@ -190,7 +190,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    top:0;
+    gap:1rem;
     position: fixed;
     margin-bottom: 225px;
   }
@@ -290,12 +290,8 @@
     width: 6rem;
     height: 6rem;
   }
-  
- 
 
-  .video_box{
-    display: flex;
-  }
+  
 
   .users__container{
     display: flex;
@@ -306,7 +302,7 @@
     
     height: 10%;
     gap:3rem;
-    margin-top: 25rem;
+    margin-top: 30rem;
     
   }
 
@@ -322,7 +318,30 @@
     cursor: pointer;
   }
 
-  .kk{
+
+  .img_box{
+    width: 20rem;
+  }
+
+  .video_box{
+    margin-top: 1rem;
+    display: flex;
+    width: 18rem;
     transform: scaleX(-1);
+  }
+
+  .videos{
+    
+    display: flex;
+    justify-content: center;
+    margin-left: 2rem;
+    flex-wrap: wrap;
+    width: 40rem;
+    position: fixed;
+  }
+
+
+  .disp{
+    display: none;
   }
 

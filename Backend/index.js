@@ -38,9 +38,16 @@ app.use(grproute);
 
 const users = {};
 const socketToRoom = {};
+const current = {};
 
 io.on('connection', socket => {
+    
     socket.on("join room", roomID => {
+
+        if (!current[roomID]) {
+            current[roomID] = {};
+        }
+
         if (users[roomID]) {
             const length = users[roomID].length;
             if (length === 4) {
@@ -50,33 +57,46 @@ io.on('connection', socket => {
             console.log("1")
             console.log(socket.id)
             users[roomID].push(socket.id);
+            
         } else {
             console.log("2")
             console.log(socket.id)
             users[roomID] = [socket.id];
         }
+
         socketToRoom[socket.id] = roomID;
         const usersInThisRoom = users[roomID].filter(id => id !== socket.id);
+        current[roomID][socket.id] = { cam: false, mic: false };
 
+        console.log(current)
+        socket.emit("current",current[roomID]);
         socket.emit("all users", usersInThisRoom);
+        socket.emit("your id",{userID:socket.id});
+        
     });
 
     socket.on("sending signal", payload => {
-        io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
+        io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID,cam:payload.cam,mic:payload.mic });
     });
 
     socket.on("returning signal", payload => {
-        io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
+        io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id,cam:payload.cam,mic:payload.mic  });
     });
 
-    socket.on('disconnect', () => {
-        const roomID = socketToRoom[socket.id];
-        let room = users[roomID];
-        if (room) {
-            room = room.filter(id => id !== socket.id);
-            users[roomID] = room;
-        }
+    socket.on("stream changed", payload => {
+        current[socketToRoom[socket.id]][socket.id] = { cam: payload.cam, mic: payload.mic };
+        users[socketToRoom[socket.id]].forEach(userID => {
+            io.to(userID).emit("user stream changed", { cam: payload.cam, mic: payload.mic, userID: payload.userID });
+        });
     });
+
+    // socket.on('disconnect', () => {
+    //     let room = users[roomID];
+    //     if (room) {
+    //         room = room.filter(id => id !== socket.id);
+    //         users[roomID] = room;
+    //     }
+    // });
 
 });
 
