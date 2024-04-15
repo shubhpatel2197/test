@@ -100,9 +100,7 @@ io.on('connection', socket => {
 
 });
 
-server.listen(port, () => {
-    console.log("Server is ON at " + port);
-});
+
 
 module.exports = server;
 app.use(session({
@@ -207,4 +205,8 @@ function isAuthenticated(req, res, next) {
     }
     res.redirect('/fail');
 }
+
+server.listen(port, () => {
+    console.log("Server is ON at " + port);
+});
 
