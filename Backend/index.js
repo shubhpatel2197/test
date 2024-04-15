@@ -167,6 +167,9 @@ app.use((req,res,next)=>{
     next();
 })
 
+app.get('/',(req,res)=>{
+    res.json("Hello");
+})
 
 // Login route
 app.post('/login', passport.authenticate('local', {
