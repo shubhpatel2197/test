@@ -119,7 +119,12 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(CORS({ origin: '*' }));
+app.use(CORS({ 
+    origin: 'https://speakingclub-three.vercel.app',
+             methods:["POST","GET"],
+             credentials:true}
+            )
+       );
 
 // Passport local strategy
 passport.use(new LocalStrategy({
