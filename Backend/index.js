@@ -118,7 +118,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(CORS({ 
-    origin: ["https://speakingclub-three.vercel.app"],
+    origin: ["https://test2-seven-nu.vercel.app"],
              methods:["POST","GET"],
              credentials:true}
             )
