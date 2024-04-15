@@ -22,6 +22,12 @@ const io = socket(server);
 const port = process.env.PORT || 4000;
 
 app.use(express.json());
+app.use(CORS({ 
+    origin: ["https://test2-seven-nu.vercel.app/"],
+             methods:["POST","GET"],
+             credentials:true}
+            )
+       );
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -117,12 +123,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(CORS({ 
-    origin: ["https://test2-seven-nu.vercel.app"],
-             methods:["POST","GET"],
-             credentials:true}
-            )
-       );
+
 
 // Passport local strategy
 passport.use(new LocalStrategy({
