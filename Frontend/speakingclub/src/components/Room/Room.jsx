@@ -46,7 +46,7 @@ export default function Room(props) {
 
     useEffect(()=>{
         
-        socketRef.current = io.connect('http://localhost:4000', { transports: ['websocket'] });
+        socketRef.current = io.connect('https://test-6-vdrh.onrender.com', { transports: ['websocket'] });
         socketRef.current.on('connect', () => {
             console.log('Connected to socket server');
             setSocketConnected(true);
