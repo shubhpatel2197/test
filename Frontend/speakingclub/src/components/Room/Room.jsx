@@ -230,11 +230,11 @@ export default function Room(props) {
         }
     }
 
-    console.log(OwnStream)
-    if(Object.keys(current).length>1){
-        console.log(peers[0].streams[0])
-        console.log(remoteStream[0])
-    }
+    // console.log(OwnStream)
+    // if(Object.keys(current).length>1){
+    //     console.log(peers[0].streams[0])
+    //     console.log(remoteStream[0])
+    // }
     
 
     return (
@@ -259,11 +259,11 @@ export default function Room(props) {
                     { (Object.keys(current).length>1 && !current[peersid[0]].cam)  && <img className='img_box' src={img} alt="2323" /> }
                     { Object.keys(current).length<=1 && <img className='img_box' src={img} alt="2323" /> }
 
-                    { Object.keys(current).length>2 && <Video cam={current[peersid[1]].cam} mic={current[peersid[1]].mic} autoPlay playsInline own={peers[1].streams[0]}/> }
+                    { Object.keys(current).length>2 && <Video cam={current[peersid[1]].cam} mic={current[peersid[1]].mic} autoPlay playsInline own={remoteStream[1]}/> }
                     { (Object.keys(current).length>2 && !current[peersid[1]].cam)  && <img className='img_box' src={img} alt="2323" /> }
                     { Object.keys(current).length<=2 && <img className='img_box' src={img} alt="2323" /> }
 
-                    { Object.keys(current).length>3 && <Video cam={current[peersid[2]].cam} mic={current[peersid[2]].mic} autoPlay playsInline own={peers[2].streams[0]}/> }
+                    { Object.keys(current).length>3 && <Video cam={current[peersid[2]].cam} mic={current[peersid[2]].mic} autoPlay playsInline own={remoteStream[2]}/> }
                     { (Object.keys(current).length>3 && !current[peersid[2]].cam)  && <img className='img_box' src={img} alt="2323" /> }
                     { Object.keys(current).length<=3 && <img className='img_box' src={img} alt="2323" /> }
 
