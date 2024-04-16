@@ -12,10 +12,11 @@ import hang from '../../Images/hangup.png';
 import styled from 'styled-components';
 import Video from './Video';
 import img from '../../Images/video.png'
-
+import ChatBox from '../ChatBox';
 
 const urlParams = new URLSearchParams(window.location.search);
 const gid = urlParams.get('gid');
+const sz = urlParams.get('sz');
 let userID;
 const stunServerUrl = 'stun:stun.l.google.com:19302';
 let OwnStream;
@@ -26,14 +27,17 @@ const invpeersid = {};
 
 
 export default function Room(props) {
+    console.log(gid)
 
     const [cam, setCam] = useState(false);
     const [mic, setMic] = useState(false);
     const [vid, setVid] = useState("1");
     const [reset,setreset] = useState({});
+    const [remoteStream,setRemoteStreams] = useState([]);
     
 
     const [peers, setPeers] = useState([]);
+    const [socketConnected,setSocketConnected] = useState(false);
     const socketRef = useRef();
     const peersRef = useRef([]);
     const roomID = gid;
@@ -42,10 +46,12 @@ export default function Room(props) {
 
     useEffect(()=>{
         
-        socketRef.current = io.connect('https://test-6-vdrh.onrender.com', { transports: ['websocket'] });
-
-        
-            
+        socketRef.current = io.connect('http://localhost:4000', { transports: ['websocket'] });
+        socketRef.current.on('connect', () => {
+            console.log('Connected to socket server');
+            setSocketConnected(true);
+        });
+         
         navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream=>{
 
                 OwnStream=stream;
@@ -106,8 +112,29 @@ export default function Room(props) {
                         setreset(payload);
                     }
                 });
+
+                socketRef.current.on("user left", payload => {
+                    let userleft = payload.userID;
+                    if(payload.userID!==userID && payload.userID){
+                        current[payload.userID].cam=payload.cam;
+                        current[payload.userID].mic=payload.mic;
+                        setreset(payload);
+                    }
+                });
                 
             })
+
+
+
+
+
+            // return () => {
+            //     delete current[userID];
+            //     delete peersid[invpeersid[userID]];
+            //     delete invpeersid[userID];
+
+            //     socketRef.current.disconnect(); // Disconnect socket when component unmounts
+            // };
 
            
         },[]);
@@ -124,6 +151,10 @@ export default function Room(props) {
             peer.on("signal", signal => {
                 socketRef.current.emit("sending signal", { userToSignal, callerID, signal,cam,mic })
             })
+
+            peer.on('stream', remoteStream => {
+                setRemoteStreams(prevStreams => [...prevStreams, remoteStream]);
+            });
     
             return peer;
         }
@@ -139,6 +170,10 @@ export default function Room(props) {
             peer.on("signal", signal => {
                 socketRef.current.emit("returning signal", { signal, callerID,cam,mic })
             })
+
+            peer.on('stream', remoteStream => {
+                setRemoteStreams(prevStreams => [...prevStreams, remoteStream]);
+            });
     
             peer.signal(incomingSignal);
     
@@ -151,8 +186,10 @@ export default function Room(props) {
         setCam((prevState) => !prevState);
 
         if (!cam) {
+            OwnStream.getTracks()[0].enabled = true;
             socketRef.current.emit("stream changed",{cam:true,mic:mic,userID:userID});    
         } else if(cam){           
+            OwnStream.getTracks()[0].enabled = false;
             socketRef.current.emit("stream changed",{cam:false,mic:mic,userID:userID});   
         }
 
@@ -169,8 +206,6 @@ export default function Room(props) {
             socketRef.current.emit("stream changed",{cam:cam,mic:false,userID:userID});   
         }
     }
-    
-    console.log(current)
     
 
     function click1() {
@@ -195,6 +230,12 @@ export default function Room(props) {
         }
     }
 
+    console.log(OwnStream)
+    if(Object.keys(current).length>1){
+        console.log(peers[0].streams[0])
+        console.log(remoteStream[0])
+    }
+    
 
     return (
         <>
@@ -214,7 +255,7 @@ export default function Room(props) {
                    {<Video mic={mic} cam={cam} autoPlay playsInline own={OwnStream}/> }
                     {!cam && <img className='img_box' src={img} alt="2323" />}
                     
-                    { Object.keys(current).length>1 && <Video cam={current[peersid[0]].cam} mic={current[peersid[0]].mic} autoPlay playsInline own={peersRef.current[0].peer.stream}/> }
+                    { Object.keys(current).length>1 && <Video cam={current[peersid[0]].cam} mic={current[peersid[0]].mic} autoPlay playsInline own={remoteStream[0]}/> }
                     { (Object.keys(current).length>1 && !current[peersid[0]].cam)  && <img className='img_box' src={img} alt="2323" /> }
                     { Object.keys(current).length<=1 && <img className='img_box' src={img} alt="2323" /> }
 
@@ -247,14 +288,12 @@ export default function Room(props) {
                         </button>
                     </div>
                 </section>
+
                 <section id="messages__container">
-                    <div id="messages"></div>
-                    <form id="message__form">
-                        <input type="text" name="message" placeholder="Send a message...." />
-                    </form>
+{/*                 {socketConnected && <ChatBox socketRef={socketRef} />} */}
                 </section>
             </div>
         </>
     );
-    }
+};
 
