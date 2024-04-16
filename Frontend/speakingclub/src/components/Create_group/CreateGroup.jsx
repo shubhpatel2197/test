@@ -82,7 +82,7 @@ export default function CreateGroup(props) {
       };
 
 
-      fetch("http://localhost:4000/creategroup", requestOptions)
+      fetch("https://test-6-vdrh.onrender.com/creategroup", requestOptions)
         .then((response) => response.text())
         .then((result) => toast.success("Group Created !!!"))
         .catch((error) => console.error(error));
