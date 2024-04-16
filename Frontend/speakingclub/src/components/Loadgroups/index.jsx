@@ -16,7 +16,7 @@ export default function LoadGroup() {
           method: "GET",
           redirect: "follow"
         };
-        const response = await fetch("http://localhost:4000/allgroups", requestOptions);
+        const response = await fetch("https://test-6-vdrh.onrender.com/allgroups", requestOptions);
         const result = await response.json();
         setGroups(result);
       } catch (error) {
