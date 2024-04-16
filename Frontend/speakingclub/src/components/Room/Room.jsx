@@ -214,7 +214,7 @@ export default function Room(props) {
                    {<Video mic={mic} cam={cam} autoPlay playsInline own={OwnStream}/> }
                     {!cam && <img className='img_box' src={img} alt="2323" />}
                     
-                    { Object.keys(current).length>1 && <Video cam={current[peersid[0]].cam} mic={current[peersid[0]].mic} autoPlay playsInline own={peers[0].streams[0]}/> }
+                    { Object.keys(current).length>1 && <Video cam={current[peersid[0]].cam} mic={current[peersid[0]].mic} autoPlay playsInline own={peersRef.current[0].stream}/> }
                     { (Object.keys(current).length>1 && !current[peersid[0]].cam)  && <img className='img_box' src={img} alt="2323" /> }
                     { Object.keys(current).length<=1 && <img className='img_box' src={img} alt="2323" /> }
 
