@@ -23,7 +23,7 @@ const port = process.env.PORT || 4000;
 
 app.use(express.json());
 app.use(CORS({ 
-    origin: ["https://test2-seven-nu.vercel.app/"],
+    origin: ["https://test2-seven-nu.vercel.app"],
              methods:["POST","GET"],
              credentials:true}
             )
