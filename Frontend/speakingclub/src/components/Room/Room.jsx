@@ -12,7 +12,7 @@ import hang from '../../Images/hangup.png';
 import styled from 'styled-components';
 import Video from './Video';
 import img from '../../Images/video.png'
-// import ChatBox from '../ChatBox';
+import ChatBox from '../ChatBox';
 
 const urlParams = new URLSearchParams(window.location.search);
 const gid = urlParams.get('gid');
