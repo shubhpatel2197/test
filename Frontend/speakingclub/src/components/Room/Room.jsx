@@ -293,7 +293,7 @@ export default function Room(props) {
                     {socketConnected && <ChatBox socketRef={socketRef} />}
                 </section>
 
-                </section>
+                
             </div>
         </>
     );
